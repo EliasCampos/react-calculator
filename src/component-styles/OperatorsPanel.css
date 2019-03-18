@@ -1,0 +1,15 @@
+.operators-panel {
+  position: absolute;
+  top: 210px;
+  left: 65%;
+  width: 25%;
+  display: flex;
+  flex-flow: row wrap;
+  max-height: 260px;
+  overflow: auto;
+}
+.operators-panel button {
+  width: 50%;
+  height: 63px;
+  font-size: 36px;
+}

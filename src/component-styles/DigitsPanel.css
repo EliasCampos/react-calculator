@@ -1,0 +1,17 @@
+.digits-panel {
+  position: relative;
+  top:80px;
+  width: 60%;
+  height: 250px;
+  padding-left: 10%;
+  display: flex;
+  flex-flow: row wrap-reverse;
+}
+.digits-panel button {
+  width:30%;
+  font-size:36px;
+  font-weight: 500;
+}
+.digits-panel button:first-child {
+  order: 1;
+}

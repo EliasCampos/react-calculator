@@ -1,0 +1,36 @@
+.display-panel {
+  position: relative;
+  top: 60px;
+  width: 80%;
+  height: 80px;
+  font-family: monospace;
+  background-color: white;
+}
+.display-panel, .display-panel p {
+  margin: 0 auto;
+}
+.display-panel div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+}
+.display-panel div:first-child p {
+  margin-top: 5px;
+  font-size: 18px;
+}
+.prev-num {
+  font-size: 16px;
+}
+.operator {
+  font-weight: 600;
+  color: green;
+}
+.display-panel div:last-child {
+  height: 50px;
+}
+.display-panel div:last-child p {
+  padding-right: 10%;
+  font-size: 30px;
+  text-align: right;
+}

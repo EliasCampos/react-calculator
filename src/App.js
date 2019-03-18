@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './component-styles/App.css';
+
+import DisplayPanel from './components/DisplayPanel.js';
+import DigitsPanel from './components/DigitsPanel.js';
+import ClearPanel from './components/ClearPanel.js';
+import OperatorsPanel from './components/OperatorsPanel.js';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <DisplayPanel prevNum="0" currentNum="0" operator="+" />
+        <ClearPanel />
+        <DigitsPanel />
+        <OperatorsPanel />
       </div>
     );
   }
