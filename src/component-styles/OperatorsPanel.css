@@ -3,13 +3,21 @@
   top: 210px;
   left: 65%;
   width: 25%;
-  display: flex;
-  flex-flow: row wrap;
   max-height: 260px;
   overflow: auto;
 }
-.operators-panel button {
+.operators-panel div {
+  width:100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+.operators-panel div > button {
   width: 50%;
   height: 63px;
   font-size: 36px;
+}
+
+.operators-panel button.invert {
+  font-size: 24px;
+  font-weight: 700;
 }

@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../component-styles/DisplayPanel.css';
 
-function DisplayPanel({prevNum, currentNum, operator}) {
+function DisplayPanel({prevNum, currentNum, operator, issue}) {
   return (
     <div className="display-panel">
       <div>
         <p className="prev-num">{ prevNum }</p>
-        <p className="operator">{ operator }</p>
+        <p className="current-operator">{ operator }</p>
+        <p className="calculation-issue">{ issue }</p>
       </div>
       <div>
         <p className="current-num">{ currentNum }</p>

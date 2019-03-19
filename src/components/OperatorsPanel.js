@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../component-styles/OperatorsPanel.css';
 
-function OperatorsPanel() {
+function OperatorsPanel({ setOperator, operateNumber }) {
   return (
     <div className="operators-panel">
-      <button>{ "+" }</button>
-      <button>{ "-" }</button>
-      <button>{ "*" }</button>
-      <button>&divide;</button>
-      <button>&plusmn;</button>
-      <button>&#37;</button>
+      <div onClick={ setOperator }>
+        <button className="binary-operator add">{ "+" }</button>
+        <button className="binary-operator subtract">{ "-" }</button>
+        <button className="binary-operator multiply">{ "*" }</button>
+        <button className="binary-operator divide">&divide;</button>
+      </div>
+      <div  onClick={ operateNumber }>
+        <button className="unary-operator opposite">&plusmn;</button>
+        <button className="unary-operator invert">{ "1/x" }</button>
+      </div>
     </div>
   );
 }

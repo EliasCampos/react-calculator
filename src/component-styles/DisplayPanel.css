@@ -22,7 +22,8 @@
 .prev-num {
   font-size: 16px;
 }
-.operator {
+.current-operator {
+  font-size: 20px;
   font-weight: 600;
   color: green;
 }
@@ -33,4 +34,8 @@
   padding-right: 10%;
   font-size: 30px;
   text-align: right;
+}
+
+.calculation-issue {
+  color: red;
 }

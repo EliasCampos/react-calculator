@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function ResultButton() {
+function ResultButton({ calculate }) {
   return (
-    <button className="result-button">
+    <button className="result-button" onClick={ calculate }>
     =
     </button>
   );

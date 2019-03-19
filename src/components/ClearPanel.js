@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../component-styles/ClearPanel.css';
 
-function ClearPanel() {
+function ClearPanel({ clearDigit, clearNumber, clearAll }) {
   return (
     <div className="clear-panel">
-      <button>{ "<--" }</button>
-      <button>C</button>
-      <button>CE</button>
+      <button onClick={ clearDigit }>&larr;</button>
+      <button onClick={ clearNumber }>C</button>
+      <button onClick={ clearAll }>CE</button>
     </div>
   );
 }

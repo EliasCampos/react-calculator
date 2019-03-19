@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function Point() {
+function Point({add, isClicked}) {
   return (
-    <button className="point">
+    <button className="point" disabled={ isClicked } onClick={ add }>
     .
     </button>
   );
