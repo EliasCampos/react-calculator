@@ -28,13 +28,15 @@ class App extends Component {
       multiply: (x, y) => x * y,
       divide: (x, y) => x / y
     }
+
+    this.problematicPattern = /e?[+-]\d$/; // Like "-3", "1.11e-7".
   }
 
   // on digits' button click handler:
   addDigit = e => {
     if (e.target.className !== "digit") return;
     const newDigit = e.target.textContent.trim();
-    const newNumber = this.state.currentNumber === "0" ? 
+    const newNumber = this.state.currentNumber === "0" ?
       newDigit : this.state.currentNumber + newDigit ;
     this.setState({
       currentNumber: newNumber,
@@ -46,9 +48,17 @@ class App extends Component {
   clearDigit = () => {
     const digitsQuant = this.state.currentNumber.length;
     const lastDigit = this.state.currentNumber[digitsQuant - 1];
-    const newNumber = digitsQuant > 1 && !(/^-\d$/.test(this.state.currentNumber)) ? 
-      this.state.currentNumber.substring(0, digitsQuant - 1)
-      : "0" ; // Will be a zero if only one digit left, without or with minus
+    // There could be some problematic case in the display,
+    // like a: "-3"  or "1.11e-7".
+    // In the first case, we need return "0", cause we cleared clearAll
+    // In the second case, we need just drop part with "e", sign and last digit
+    const problemMatch = this.problematicPattern.exec(this.state.currentNumber);
+    const badCaseStart = problemMatch === null ?
+      null
+      : problemMatch[0][0];
+    const newNumber = digitsQuant > 1 && badCaseStart !== "-" ?
+      this.state.currentNumber.substring(0, digitsQuant - (!badCaseStart? 1:3))
+      : "0" ; // Will be a zero if only one digit left (exclude minus)
     if (lastDigit === ".") {
       this.setState({
         currentNumber: newNumber,
@@ -65,6 +75,7 @@ class App extends Component {
   clearNumber = () => {
     this.setState({
       currentNumber: "0",
+      isPoint: false,
       issue: null
     });
   }
@@ -73,6 +84,7 @@ class App extends Component {
       prevNumber: null,
       currentNumber: "0",
       operator: null,
+      isPoint: false,
       issue: null
     });
   }
@@ -89,7 +101,7 @@ class App extends Component {
     }
 
     const [prevNumber, currentNumber, isPoint] = this.state.operator === null ?
-      [this.state.currentNumber, "0", false] 
+      [this.state.currentNumber, "0", false]
       : [this.state.prevNumber, this.state.currentNumber, this.state.isPoint];
 
     this.setState({
@@ -112,7 +124,7 @@ class App extends Component {
     const resultString = isBadResult ?
       "0" :
       String(result) ;
-    
+
     this.setState({
       currentNumber: resultString,
       isPoint,
@@ -121,7 +133,7 @@ class App extends Component {
   }
 
   addPoint = e => {
-    this.setState({ 
+    this.setState({
       isPoint: true,
       currentNumber: this.state.currentNumber + ".",
       issue: null
@@ -130,14 +142,19 @@ class App extends Component {
 
   calculateResult = e => {
     if (!this.state.operator) return;
-    const result = this.state.operator.procedure(Number(this.state.prevNumber), Number(this.state.currentNumber));
+    const result = this.state.operator.procedure(
+      Number(this.state.prevNumber),
+      Number(this.state.currentNumber)
+    );
     const isPoint = result % 1 !== 0 ;
+    const isOutOfRange = result > 1e+20;
     const isBadResult = (isNaN(result) || result === Infinity);
-    const issue = isBadResult ? "You can't divide by zero!" : null ;
-    const resultString = isBadResult ?
+    const issue = isBadResult ? "You can't divide by zero!"
+      : (isOutOfRange ? "Out of range." : null) ;
+    const resultString = isBadResult || isOutOfRange ?
       "0" :
       String(result) ;
-    
+
     this.setState({
       prevNumber: null,
       currentNumber: resultString,
@@ -151,26 +168,26 @@ class App extends Component {
     const { prevNumber, currentNumber, operator } = this.state;
     return (
       <div className="App">
-        <DisplayPanel 
-          prevNum={ prevNumber } 
-          currentNum={ currentNumber } 
-          operator={ !operator ? null : operator.symbol } 
-          issue={ this.state.issue } 
+        <DisplayPanel
+          prevNum={ prevNumber }
+          currentNum={ currentNumber }
+          operator={ !operator ? null : operator.symbol }
+          issue={ this.state.issue }
         />
-        <ClearPanel 
-          clearDigit={ this.clearDigit } 
-          clearNumber={ this.clearNumber } 
-          clearAll={ this.clearAll } 
+        <ClearPanel
+          clearDigit={ this.clearDigit }
+          clearNumber={ this.clearNumber }
+          clearAll={ this.clearAll }
         />
-        <DigitsPanel 
-          addDigit={ this.addDigit } 
-          calculate={ this.calculateResult } 
-          addPoint={ this.addPoint } 
-          poinIsClicked={ this.state.isPoint } 
+        <DigitsPanel
+          addDigit={ this.addDigit }
+          calculate={ this.calculateResult }
+          addPoint={ this.addPoint }
+          poinIsClicked={ this.state.isPoint }
         />
-        <OperatorsPanel 
-          setOperator={ this.setBinaryOperator } 
-          operateNumber={ this.operateNumber } 
+        <OperatorsPanel
+          setOperator={ this.setBinaryOperator }
+          operateNumber={ this.operateNumber }
         />
       </div>
     );
