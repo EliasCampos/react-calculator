@@ -118,8 +118,8 @@ class App extends Component {
     const operatorType = match[1];
     const procedure = this.unaryOperatorsFunctions[operatorType];
     const result = procedure(Number(this.state.currentNumber));
-    const isPoint = result % 1 !== 0 ;
-    const isBadResult = result === Infinity;
+    const isPoint = !isNaN(result % 1) && result % 1 !== 0;
+    const isBadResult = Math.abs(result) === Infinity;
     const issue = isBadResult ? "You can't divide by zero!" : null ;
     const resultString = isBadResult ?
       "0" :
@@ -146,9 +146,9 @@ class App extends Component {
       Number(this.state.prevNumber),
       Number(this.state.currentNumber)
     );
-    const isPoint = result % 1 !== 0 ;
+    const isPoint = !isNaN(result % 1) && result % 1 !== 0;
     const isOutOfRange = result > 1e+20;
-    const isBadResult = (isNaN(result) || result === Infinity);
+    const isBadResult = (isNaN(result) || Math.abs(result) === Infinity);
     const issue = isBadResult ? "You can't divide by zero!"
       : (isOutOfRange ? "Out of range." : null) ;
     const resultString = isBadResult || isOutOfRange ?
